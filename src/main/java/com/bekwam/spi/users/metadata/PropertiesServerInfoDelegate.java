@@ -17,7 +17,7 @@ public class PropertiesServerInfoDelegate {
 
     private static final Logger LOGGER = Logger.getLogger(PropertiesServerInfoDelegate.class);
 
-    private final String FILE_PATH = "/info.properties";
+    private final static String FILE_PATH = "/info.properties";
 
     public Map<String, String> getProperties() {
         Properties properties = new Properties();
