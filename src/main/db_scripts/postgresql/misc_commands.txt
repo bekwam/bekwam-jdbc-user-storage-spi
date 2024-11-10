@@ -1,0 +1,38 @@
+-- miscellaneous commands for Postgresql 16 on Ubuntu 24
+
+$ sudo mkdir /var/lib/postgresql/data_07
+
+$ sudo chmod 700 data_07
+
+$ sudo chown postgres:postgres data_07
+
+$ sudo -i -u postgres psql -p 5433
+
+CREATE TABLESPACE tbs_07 LOCATION '/var/lib/postgresql/data_07';
+
+CREATE DATABASE userspidb TABLESPACE tbs_07;
+
+CREATE USER userspi LOGIN PASSWORD 'YYY';
+
+ALTER TABLESPACE tbs_07 OWNER TO userspi;
+
+ALTER DATABASE userspidb OWNER TO userspi;
+
+-- run these as userspi (not as postgres)
+
+CREATE TABLE us_user (
+id SERIAL PRIMARY KEY,
+username VARCHAR(100) UNIQUE,
+password VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE us_role (
+id SERIAL PRIMARY KEY,
+name VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE us_user_role (
+id SERIAL PRIMARY KEY,
+user_id int NOT NULL REFERENCES us_user(id),
+role_id int NOT NULL REFERENCES us_role(id)
+);
