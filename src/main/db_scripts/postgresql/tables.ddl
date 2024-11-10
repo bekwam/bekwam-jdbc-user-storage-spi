@@ -1,7 +1,9 @@
 CREATE TABLE us_user (
                          id SERIAL PRIMARY KEY,
                          username VARCHAR(100) UNIQUE,
-                         password VARCHAR(100) NOT NULL
+                         password VARCHAR(100) NOT NULL,
+                         email VARCHAR(100),
+                         name VARCHAR(100)
 );
 
 CREATE TABLE us_role (
