@@ -1,5 +1,8 @@
-INSERT INTO us_user (username, password) VALUES ('myuser', 'abc123');
-INSERT INTO us_user (username, password) VALUES ('myadmin', 'def456');
+-- must have pg_crypto available postgres-wide and enabled for this DB
+CREATE EXTENSION pgcrypto;
+
+INSERT INTO us_user (username, password) VALUES ('myuser', encode(digest('abc123', 'sha256'), 'base64'));
+INSERT INTO us_user (username, password) VALUES ('myadmin', encode(digest('def456', 'sha256'), 'base64'));
 
 INSERT INTO us_role (name) VALUES ('user');
 INSERT INTO us_role (name) VALUES ('admin');
