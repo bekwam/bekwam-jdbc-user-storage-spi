@@ -53,22 +53,6 @@ public class ConfigMetadataFactory {
                 .add();
 
         builder
-                .property().name(Constants.PROVIDER_PROPERTY_USER_QUERY)
-                .type(ProviderConfigProperty.STRING_TYPE)
-                .label("User Query")
-                .defaultValue(DEFAULT_VALUE_PASSWORD_QUERY)
-                .helpText("SQL select statement that returns a hashed password when given an end user's username")
-                .add();
-
-        builder
-                .property().name(Constants.PROVIDER_PROPERTY_ROLES_QUERY)
-                .type(ProviderConfigProperty.STRING_TYPE)
-                .label("Roles Query")
-                .defaultValue(DEFAULT_VALUE_ROLES_QUERY)
-                .helpText("SQL select statement that returns a list of roles given an end user's username")
-                .add();
-
-        builder
                 .property().name(Constants.PROVIDER_PROPERTY_MIN_SIZE)
                 .type(ProviderConfigProperty.STRING_TYPE)
                 .label("Min Pool Size")
@@ -121,6 +105,22 @@ public class ConfigMetadataFactory {
                 )
                 .defaultValue(DBVendorType.Oracle.name())
                 .helpText("Database Vendor")
+                .add();
+
+        builder
+                .property().name(Constants.PROVIDER_PROPERTY_USER_QUERY)
+                .type(ProviderConfigProperty.STRING_TYPE)
+                .label("User Query")
+                .defaultValue(DEFAULT_VALUE_PASSWORD_QUERY)
+                .helpText("SQL select statement that returns a hashed password when given an end user's username")
+                .add();
+
+        builder
+                .property().name(Constants.PROVIDER_PROPERTY_ROLES_QUERY)
+                .type(ProviderConfigProperty.STRING_TYPE)
+                .label("Roles Query")
+                .defaultValue(DEFAULT_VALUE_ROLES_QUERY)
+                .helpText("SQL select statement that returns a list of roles given an end user's username")
                 .add();
 
         builder

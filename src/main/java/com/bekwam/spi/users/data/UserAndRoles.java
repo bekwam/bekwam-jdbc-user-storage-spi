@@ -36,7 +36,7 @@ public class UserAndRoles {
 
             @Override
             public void setUsername(String username) {
-                throw new UnsupportedOperationException("jdbc users are read-only; modify in IMPACT");
+                throw new UnsupportedOperationException("jdbc users are read-only");
             }
 
             @Override
