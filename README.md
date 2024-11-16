@@ -10,7 +10,11 @@ In version 1.0, only Postgres has been fully-tested and the password field must 
 
 # Installation
 
-To install the Bekwam JDBC SPI, run a `mvn clean install` from the top level of the bekwam-jdbc-user-storage-spi [project in GitHub](https://github.com/bekwam/bekwam-jdbc-user-storage-spi).  Copy the bekwam-jdbc-user-storage-spi-1.0.jar JAR into the Keycloak /providers folder.  Rebuild Keycloak or if evaluating, use `bin/kc.sh start-dev`.
+To install the Bekwam JDBC SPI, run a `mvn clean install` from the top level of the bekwam-jdbc-user-storage-spi [project in GitHub](https://github.com/bekwam/bekwam-jdbc-user-storage-spi).  Copy the bekwam-jdbc-user-storage-spi-1.0.jar JAR into the Keycloak /providers folder.
+
+The JDBC driver used by the SPI will also need to be copied into the /providers folder.  This is a JAR file like postgresql-42.6.0.jar or ojdbc11.jar.
+
+Rebuild Keycloak or if evaluating, use `bin/kc.sh start-dev`.
 
 # Configuration
 
@@ -119,6 +123,25 @@ The query must return quickly.  For Postgres, `SELECT 1` is recommended.  For Or
 This is a parameter provided to all User Storage SPI implementations.
 
 NO_CACHE is usually the best option because credential changes to the underlying datastore will be effective immediately.
+
+# Troubleshooting
+
+There are some basic validations on the configuration screen.
+
+For more detailed information about the operation or configuration of the SPI, enabled Quarkus logging using the following category.  When running in developer mode
+
+```
+bin/kc.sh start-dev -Dquarkus.log.category.\"com.bekwam\".level=TRACE
+```
+
+# Support
+
+Feel free to DM Carl Walker at the Cloud Native Computing Foundation Slack.
+
+![image](https://github.com/user-attachments/assets/1d82b534-4e08-40ae-a7ff-2efe2d142ae4 "Carl")
+
+
+
 
 
 
