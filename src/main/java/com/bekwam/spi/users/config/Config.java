@@ -27,8 +27,6 @@ public class Config {
 
     private final String maxSize;
 
-    private final boolean flushOnClose;
-
     private final boolean metricsEnabled;
 
     private final String usernameCase;
@@ -50,7 +48,6 @@ public class Config {
                   String rolesSQL,
                   String minSize,
                   String maxSize,
-                  boolean flushOnClose,
                   boolean metricsEnabled,
                   String usernameCase,
                   String validationTimeout,
@@ -65,7 +62,6 @@ public class Config {
         this.rolesSQL = rolesSQL;
         this.minSize = minSize;
         this.maxSize = maxSize;
-        this.flushOnClose = flushOnClose;
         this.metricsEnabled = metricsEnabled;
         this.usernameCase = usernameCase;
         this.validationTimeout = validationTimeout;
@@ -84,7 +80,6 @@ public class Config {
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_ROLES_QUERY),
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_MIN_SIZE),
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_MAX_SIZE),
-                Boolean.valueOf(config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_FLUSH_ON_CLOSE)),
                 Boolean.valueOf(config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_METRICS_ENABLED)),
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_USERNAME_CASE),
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_VALIDATION_TIMEOUT),
@@ -132,10 +127,6 @@ public class Config {
         return maxSize;
     }
 
-    public boolean isFlushOnClose() {
-        return flushOnClose;
-    }
-
     public boolean isMetricsEnabled() {
         return metricsEnabled;
     }
@@ -170,15 +161,14 @@ public class Config {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Config config = (Config) o;
-        return flushOnClose == config.flushOnClose && metricsEnabled == config.metricsEnabled && Objects.equals(connectionURL, config.connectionURL) && Objects.equals(username, config.username) && Objects.equals(password, config.password) && Objects.equals(usersSQL, config.usersSQL) && Objects.equals(rolesSQL, config.rolesSQL) && Objects.equals(minSize, config.minSize) && Objects.equals(maxSize, config.maxSize) && Objects.equals(usernameCase, config.usernameCase) && Objects.equals(validationTimeout, config.validationTimeout) && Objects.equals(dbVendor, config.dbVendor) && Objects.equals(allUsersSQL, config.allUsersSQL) && Objects.equals(searchUsersSQL, config.searchUsersSQL) && Objects.equals(validationSQL, config.validationSQL);
+        return metricsEnabled == config.metricsEnabled && Objects.equals(connectionURL, config.connectionURL) && Objects.equals(username, config.username) && Objects.equals(password, config.password) && Objects.equals(usersSQL, config.usersSQL) && Objects.equals(rolesSQL, config.rolesSQL) && Objects.equals(minSize, config.minSize) && Objects.equals(maxSize, config.maxSize) && Objects.equals(usernameCase, config.usernameCase) && Objects.equals(validationTimeout, config.validationTimeout) && Objects.equals(dbVendor, config.dbVendor) && Objects.equals(allUsersSQL, config.allUsersSQL) && Objects.equals(searchUsersSQL, config.searchUsersSQL) && Objects.equals(validationSQL, config.validationSQL);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(connectionURL, username, password, usersSQL, rolesSQL, minSize, maxSize, flushOnClose, metricsEnabled, usernameCase, validationTimeout, dbVendor, allUsersSQL, searchUsersSQL, validationSQL);
+        return Objects.hash(connectionURL, username, password, usersSQL, rolesSQL, minSize, maxSize, metricsEnabled, usernameCase, validationTimeout, dbVendor, allUsersSQL, searchUsersSQL, validationSQL);
     }
 
     @Override
@@ -186,11 +176,11 @@ public class Config {
         return "Config{" +
                 "connectionURL='" + connectionURL + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", usersSQL='" + usersSQL + '\'' +
                 ", rolesSQL='" + rolesSQL + '\'' +
                 ", minSize='" + minSize + '\'' +
                 ", maxSize='" + maxSize + '\'' +
-                ", flushOnClose=" + flushOnClose +
                 ", metricsEnabled=" + metricsEnabled +
                 ", usernameCase='" + usernameCase + '\'' +
                 ", validationTimeout='" + validationTimeout + '\'' +

@@ -97,7 +97,7 @@ public class JDBCUserStorageProvider implements UserStorageProvider,
 
                 // Compute the hash
                 var computedHash = new SHA256PasswordEncoder().encode(enteredPassword);
-LOGGER.debug("computedHash=" + computedHash);
+
                 // Check if the computed hash matches the stored password hash
                 return storedPassword.equals(computedHash);
             }

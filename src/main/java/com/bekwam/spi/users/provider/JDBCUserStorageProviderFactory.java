@@ -165,7 +165,6 @@ public class JDBCUserStorageProviderFactory
                                                 )
                                                 .initialSql(config.getValidationSQL())
                                         )
-                                        .flushOnClose(config.isFlushOnClose())
                                         .minSize(config.getMinSizeAsInt())
                                         .initialSize(config.getMinSizeAsInt())
                                         .maxSize(config.getMaxSizeAsInt())

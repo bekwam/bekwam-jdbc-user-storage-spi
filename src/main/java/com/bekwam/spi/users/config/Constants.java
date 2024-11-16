@@ -15,7 +15,6 @@ public class Constants {
     public final static String PROVIDER_PROPERTY_ROLES_QUERY    = "roles_query";
     public final static String PROVIDER_PROPERTY_MIN_SIZE    = "min_size";
     public final static String PROVIDER_PROPERTY_MAX_SIZE    = "max_size";
-    public final static String PROVIDER_PROPERTY_FLUSH_ON_CLOSE    = "flush_on_close";
     public final static String PROVIDER_PROPERTY_METRICS_ENABLED    = "metrics_enabled";
     public final static String PROVIDER_PROPERTY_USERNAME_CASE = "username_case";
     public final static String PROVIDER_PROPERTY_VALIDATION_TIMEOUT = "validation_timeout";

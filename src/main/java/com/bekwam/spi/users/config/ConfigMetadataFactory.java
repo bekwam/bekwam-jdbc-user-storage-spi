@@ -69,14 +69,6 @@ public class ConfigMetadataFactory {
                 .add();
 
         builder
-                .property().name(Constants.PROVIDER_PROPERTY_FLUSH_ON_CLOSE)
-                .type(ProviderConfigProperty.BOOLEAN_TYPE)
-                .label("Flush On Close")
-                .defaultValue(Boolean.FALSE)
-                .helpText("Flush connections on return to pool (TRUE is discouraged because a big performance penalty was discovered)")
-                .add();
-
-        builder
                 .property().name(Constants.PROVIDER_PROPERTY_METRICS_ENABLED)
                 .type(ProviderConfigProperty.BOOLEAN_TYPE)
                 .label("Enable Metrics")
