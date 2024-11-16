@@ -124,4 +124,37 @@
             </resource>
         </resources>
     </build>
+
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Bekwam, Inc</name>
+        <url>https://www.bekwam.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>walkerca</id>
+            <name>Carl Walker</name>
+            <email>carl@bekwam.com</email>
+            <url>https://www.bekwam.com</url>
+            <organization>Bekwam, Inc</organization>
+            <organizationUrl>https://www.bekwam.com</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+            <properties>
+                <picUrl>https://www.bekwam.com/images/cw_casual.png</picUrl>
+            </properties>
+        </developer>
+    </developers>
 </project>
