@@ -6,7 +6,7 @@
 
     <groupId>com.bekwam</groupId>
     <artifactId>bekwam-jdbc-user-storage-spi</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

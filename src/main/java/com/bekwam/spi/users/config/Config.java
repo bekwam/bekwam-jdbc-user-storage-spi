@@ -1,6 +1,8 @@
 package com.bekwam.spi.users.config;
 
+import com.bekwam.spi.users.crypto.BinaryEncoderType;
 import com.google.common.base.Preconditions;
+import org.jboss.logging.Logger;
 import org.keycloak.component.ComponentModel;
 
 import java.util.Objects;
@@ -12,6 +14,8 @@ import java.util.Objects;
  * @since 1.0
  */
 public class Config {
+
+    private static final Logger LOGGER = Logger.getLogger(Config.class);
 
     private final String connectionURL;
 
@@ -41,6 +45,8 @@ public class Config {
 
     private final String validationSQL;
 
+    private final BinaryEncoderType binaryEncoder;
+
     public Config(String connectionURL,
                   String username,
                   String password,
@@ -54,7 +60,8 @@ public class Config {
                   String dbVendor,
                   String allUsersSQL,
                   String searchUsersSQL,
-                  String validationSQL) {
+                  String validationSQL,
+                  String binaryEncoder_s) {
         this.connectionURL = connectionURL;
         this.username = username;
         this.password = password;
@@ -69,6 +76,14 @@ public class Config {
         this.allUsersSQL = allUsersSQL;
         this.searchUsersSQL = searchUsersSQL;
         this.validationSQL = validationSQL;
+
+        var enc = BinaryEncoderType.BASE64; // handle legacy data
+        try {
+            enc = Enum.valueOf(BinaryEncoderType.class, binaryEncoder_s);
+        } catch (NullPointerException | IllegalArgumentException exc) {
+            LOGGER.warn("received bad binaryEncoder; defaulting to " + enc.name());
+        }
+        this.binaryEncoder = enc;
     }
 
     public static Config from(ComponentModel config) {
@@ -86,7 +101,8 @@ public class Config {
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_DB_VENDOR),
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_ALL_USERS_QUERY),
                 config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_SEARCH_USERS_QUERY),
-                config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_VALIDATION_QUERY)
+                config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_VALIDATION_QUERY),
+                config.getConfig().getFirst(Constants.PROVIDER_PROPERTY_BINARY_ENCODER)
         );
     }
 
@@ -159,16 +175,20 @@ public class Config {
         return validationSQL;
     }
 
+    public BinaryEncoderType getBinaryEncoder() {
+        return binaryEncoder;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Config config = (Config) o;
-        return metricsEnabled == config.metricsEnabled && Objects.equals(connectionURL, config.connectionURL) && Objects.equals(username, config.username) && Objects.equals(password, config.password) && Objects.equals(usersSQL, config.usersSQL) && Objects.equals(rolesSQL, config.rolesSQL) && Objects.equals(minSize, config.minSize) && Objects.equals(maxSize, config.maxSize) && Objects.equals(usernameCase, config.usernameCase) && Objects.equals(validationTimeout, config.validationTimeout) && Objects.equals(dbVendor, config.dbVendor) && Objects.equals(allUsersSQL, config.allUsersSQL) && Objects.equals(searchUsersSQL, config.searchUsersSQL) && Objects.equals(validationSQL, config.validationSQL);
+        return metricsEnabled == config.metricsEnabled && Objects.equals(connectionURL, config.connectionURL) && Objects.equals(username, config.username) && Objects.equals(password, config.password) && Objects.equals(usersSQL, config.usersSQL) && Objects.equals(rolesSQL, config.rolesSQL) && Objects.equals(minSize, config.minSize) && Objects.equals(maxSize, config.maxSize) && Objects.equals(usernameCase, config.usernameCase) && Objects.equals(validationTimeout, config.validationTimeout) && Objects.equals(dbVendor, config.dbVendor) && Objects.equals(allUsersSQL, config.allUsersSQL) && Objects.equals(searchUsersSQL, config.searchUsersSQL) && Objects.equals(validationSQL, config.validationSQL) && binaryEncoder == config.binaryEncoder;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(connectionURL, username, password, usersSQL, rolesSQL, minSize, maxSize, metricsEnabled, usernameCase, validationTimeout, dbVendor, allUsersSQL, searchUsersSQL, validationSQL);
+        return Objects.hash(connectionURL, username, password, usersSQL, rolesSQL, minSize, maxSize, metricsEnabled, usernameCase, validationTimeout, dbVendor, allUsersSQL, searchUsersSQL, validationSQL, binaryEncoder);
     }
 
     @Override
@@ -176,7 +196,6 @@ public class Config {
         return "Config{" +
                 "connectionURL='" + connectionURL + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", usersSQL='" + usersSQL + '\'' +
                 ", rolesSQL='" + rolesSQL + '\'' +
                 ", minSize='" + minSize + '\'' +
@@ -188,6 +207,7 @@ public class Config {
                 ", allUsersSQL='" + allUsersSQL + '\'' +
                 ", searchUsersSQL='" + searchUsersSQL + '\'' +
                 ", validationSQL='" + validationSQL + '\'' +
+                ", binaryEncoder=" + binaryEncoder +
                 '}';
     }
 }

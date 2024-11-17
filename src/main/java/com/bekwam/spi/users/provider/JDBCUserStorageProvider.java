@@ -1,5 +1,6 @@
 package com.bekwam.spi.users.provider;
 
+import com.bekwam.spi.users.crypto.BinaryEncoderType;
 import com.bekwam.spi.users.crypto.SHA256PasswordEncoder;
 import com.bekwam.spi.users.data.Role;
 import com.bekwam.spi.users.data.User;
@@ -41,12 +42,13 @@ public class JDBCUserStorageProvider implements UserStorageProvider,
 
     private static final Logger LOGGER = Logger.getLogger(JDBCUserStorageProvider.class);
 
-    private KeycloakSession session;
-    private ComponentModel model;
-    private AgroalDataSource ds;
-    private String usersSQL;
-    private String rolesSQL;
-    private UserDAO userDAO;
+    private final KeycloakSession session;
+    private final ComponentModel model;
+    private final AgroalDataSource ds;
+    private final String usersSQL;
+    private final String rolesSQL;
+    private final UserDAO userDAO;
+    private final BinaryEncoderType binaryEncoder;
 
     public JDBCUserStorageProvider(
             KeycloakSession session,
@@ -54,7 +56,8 @@ public class JDBCUserStorageProvider implements UserStorageProvider,
             AgroalDataSource ds,
             String userSQL,
             String rolesSQL,
-            UserDAO userDAO) {
+            UserDAO userDAO,
+            BinaryEncoderType binaryEncoder) {
 
         LOGGER.trace("JDBCUserStorageProvider constructor");
 
@@ -64,6 +67,7 @@ public class JDBCUserStorageProvider implements UserStorageProvider,
         this.usersSQL = userSQL;
         this.rolesSQL = rolesSQL;
         this.userDAO = userDAO;
+        this.binaryEncoder = binaryEncoder;
 
         if( ds != null ) {
             LOGGER.trace( ds.getMetrics());
@@ -96,7 +100,10 @@ public class JDBCUserStorageProvider implements UserStorageProvider,
                 var enteredPassword = credentialInput.getChallengeResponse();
 
                 // Compute the hash
-                var computedHash = new SHA256PasswordEncoder().encode(enteredPassword);
+                var computedHash = switch(binaryEncoder) {
+                    case BASE64 ->  new SHA256PasswordEncoder().encodeBase64(enteredPassword);
+                    case HEX -> new SHA256PasswordEncoder().encodeHex(enteredPassword);
+                };
 
                 // Check if the computed hash matches the stored password hash
                 return storedPassword.equals(computedHash);

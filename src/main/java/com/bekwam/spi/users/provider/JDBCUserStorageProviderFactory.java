@@ -76,7 +76,8 @@ public class JDBCUserStorageProviderFactory
                         new UserDAOImpl(
                                 config.getAllUsersSQL(),
                                 config.getSearchUsersSQL()
-                        )
+                        ),
+                        config.getBinaryEncoder()
                 );
             } else {
                 LOGGER.warn("ds not healthy (is it initializing?)");

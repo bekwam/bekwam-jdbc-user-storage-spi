@@ -1,5 +1,6 @@
 package com.bekwam.spi.users.config;
 
+import com.bekwam.spi.users.crypto.BinaryEncoderType;
 import org.jboss.logging.Logger;
 import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderConfigurationBuilder;
@@ -105,6 +106,20 @@ public class ConfigMetadataFactory {
                 .label("User Query")
                 .defaultValue(DEFAULT_VALUE_PASSWORD_QUERY)
                 .helpText("SQL select statement that returns a hashed password when given an end user's username")
+                .add();
+
+        builder
+                .property().name(PROVIDER_PROPERTY_BINARY_ENCODER)
+                .type(ProviderConfigProperty.LIST_TYPE)
+                .label("Password Binary Encoder")
+                .options(
+                        Arrays
+                                .stream(BinaryEncoderType.values())
+                                .map(BinaryEncoderType::name)
+                                .collect(Collectors.toList())
+                )
+                .defaultValue(DEFAULT_BINARY_ENCODER.name())
+                .helpText("Binary encoding used on the hashed password column in User Query")
                 .add();
 
         builder

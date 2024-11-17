@@ -9,7 +9,9 @@ SELECT us_user_2.id, us_role_2.id
 FROM us_user_2 CROSS JOIN us_role_2 WHERE username = 'theuser' AND us_role_2.name = 'user'
 
 -- query to verify joins
-SELECT username, us_role_2.name
+SELECT username, password, us_role_2.name
 FROM us_user_2
          JOIN us_user_role_2 ON (us_user_role_2.user_id = us_user_2.id)
          JOIN us_role_2 ON (us_user_role_2.role_id = us_role_2.id)
+
+UPDATE us_user_2 SET password = encode(digest('ghi789', 'sha256'), 'hex') WHERE us_user_2.username = 'theuser';
