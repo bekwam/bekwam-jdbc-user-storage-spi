@@ -8,6 +8,6 @@ package com.bekwam.spi.users.crypto;
  * @since 1.0
  */
 public interface PasswordEncoder {
-    String encode(String password);
+    String encodeBase64(String password);
+    String encodeHex(String password);
 }
-
