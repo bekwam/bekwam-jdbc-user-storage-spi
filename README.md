@@ -136,6 +136,8 @@ bin/kc.sh start-dev -Dquarkus.log.category.\"com.bekwam\".level=TRACE
 
 # Support
 
+See [the Wiki](https://github.com/bekwam/bekwam-jdbc-user-storage-spi/wiki) for additional documentation.
+
 Feel free to DM Carl Walker at the Cloud Native Computing Foundation Slack.
 
 ![image](https://github.com/user-attachments/assets/1d82b534-4e08-40ae-a7ff-2efe2d142ae4 "Carl")
